@@ -35,6 +35,19 @@ let NilString = "(nil)"
 
 var Changes = [(aspect: Aspect, value: Any)]()
 
+
+class Schema {
+    var tables = [String: Table]()
+}
+
+
+class Table {
+    var fields = [String: AspectDescriptor]()
+    
+    var records = [Aspect]()
+}
+
+
 class Aspect: CustomStringConvertible {
     let descriptor: AspectDescriptor
     var _value: AspectValue?
@@ -107,6 +120,5 @@ class Aspect: CustomStringConvertible {
             _value = .StringVal(nv)
         }
     }
-
 }
 

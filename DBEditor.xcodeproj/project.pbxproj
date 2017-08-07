@@ -11,7 +11,6 @@
 		654FAA571F3771E8000E83BD /* Aspect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654FAA541F3771E8000E83BD /* Aspect.swift */; };
 		654FAA581F3771E8000E83BD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654FAA551F3771E8000E83BD /* ViewController.swift */; };
 		654FAA5B1F3771F9000E83BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 654FAA591F3771F9000E83BD /* LaunchScreen.storyboard */; };
-		654FAA5C1F3771F9000E83BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 654FAA5A1F3771F9000E83BD /* Main.storyboard */; };
 		654FAA601F377212000E83BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 654FAA5F1F377212000E83BD /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -21,7 +20,6 @@
 		654FAA541F3771E8000E83BD /* Aspect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Aspect.swift; path = src/Aspect.swift; sourceTree = SOURCE_ROOT; };
 		654FAA551F3771E8000E83BD /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = src/ViewController.swift; sourceTree = SOURCE_ROOT; };
 		654FAA591F3771F9000E83BD /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = storyboard/LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
-		654FAA5A1F3771F9000E83BD /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Main.storyboard; path = storyboard/Main.storyboard; sourceTree = SOURCE_ROOT; };
 		654FAA5D1F377206000E83BD /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = resource/Info.plist; sourceTree = SOURCE_ROOT; };
 		654FAA5F1F377212000E83BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = resource/Assets.xcassets; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -59,7 +57,6 @@
 				654FAA5F1F377212000E83BD /* Assets.xcassets */,
 				654FAA5D1F377206000E83BD /* Info.plist */,
 				654FAA591F3771F9000E83BD /* LaunchScreen.storyboard */,
-				654FAA5A1F3771F9000E83BD /* Main.storyboard */,
 				654FAA531F3771E8000E83BD /* AppDelegate.swift */,
 				654FAA541F3771E8000E83BD /* Aspect.swift */,
 				654FAA551F3771E8000E83BD /* ViewController.swift */,
@@ -129,7 +126,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				654FAA5B1F3771F9000E83BD /* LaunchScreen.storyboard in Resources */,
-				654FAA5C1F3771F9000E83BD /* Main.storyboard in Resources */,
 				654FAA601F377212000E83BD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
