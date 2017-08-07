@@ -1,0 +1,105 @@
+#!/bin/bash
+#
+### BEGIN INIT INFO
+# Provides:		timezen-server
+# Required-Start:	$syslog $network
+# Required-Stop:	$syslog $network
+# Should-Start:		$time
+# Should-Stop:		$time
+# Default-Start:	2 3 4 5
+# Default-Stop:		0 1 6
+# Short-Description:	Start and stop the timezen server daemon
+# Description:		Start and stop the timezen server daemon
+#
+### END INIT INFO
+#
+${DEBIAN_SCRIPT_DEBUG:+ set -v -x}
+
+. /lib/lsb/init-functions
+
+export TIMEZEN_ROOT=/bb
+
+if [[ "${TIMEZEN_CODEBASE}" == "unstable" ]]; then
+    TIMEZEN_DIR=${TIMEZEN_ROOT}/unstable
+    echo "Running UNSTABLE code."
+else
+    export TIMEZEN_CODEBASE="stable"
+    TIMEZEN_DIR=${TIMEZEN_ROOT}/server
+fi
+
+TIMEZEN_PID_DIR=/var/run/timezen
+if [[ ! -d "${TIMEZEN_PID_DIR}" ]]; then
+    echo "TimeZen PID directory doesn't exist, must be startup. Creating."
+    mkdir ${TIMEZEN_PID_DIR}; chown timezen:www-data ${TIMEZEN_PID_DIR}
+fi
+
+TIMEZEN_PID_FILE=${TIMEZEN_PID_DIR}/timezen-server-${TIMEZEN_CODEBASE}.pid
+export TIMEZEN_PID_FILE TIMEZEN_DIR
+
+
+function die {
+    msg=$1
+    log_failure_msg ${msg}
+    logger -p daemon.err -t timezen-server ${msg}
+    exit 1
+}
+
+function info {
+    msg=$1
+    log_daemon_msg ${msg}
+    logger -p daemon.info -t timezen-server ${msg}
+}
+
+if [[ ! -x /usr/bin/node || ! -f ${TIMEZEN_ROOT}/server/server.js ]]; then
+    die "ERROR: Software not found"
+fi
+
+function start {
+    # server expected to create own PID file now; see config.js and init portion of server.js
+    info "Starting timezen_server, pid file ${TIMEZEN_PID_FILE}..."
+    NODE_DEBUG= start-stop-daemon --start \
+	--background \
+	--chuid root \
+	--chdir ${TIMEZEN_DIR} \
+	--pidfile ${TIMEZEN_PID_FILE} \
+	--startas ${TIMEZEN_DIR}/start_server.sh
+    exit_code=$?
+    [[ "${exit_code}" == 0 ]] && info "...done!" || info "...failed! (${exit_code})"
+}
+
+
+function stop {
+    info "Stopping timezen_server..."
+    start-stop-daemon --stop --pidfile ${TIMEZEN_PID_FILE} --retry 2 && info "...done!" || info "...failed! ($?)"
+}
+
+
+case "${1:-''}" in
+    'start')
+	start
+	;;
+
+    'stop')
+	stop
+	;;
+
+    'restart')
+	stop
+	start
+	;;
+    
+    'status')
+        start-stop-daemon --status --pidfile ${TIMEZEN_PID_FILE}
+	case "$?" in
+	    '0') info "TimeZen is running" ;;
+	    '1') info "TimeZen is broken: PID file exists but not running. Removing."; rm -f ${TIMEZEN_PID_FILE} ;;
+	    '3') info "TimeZen is not running" ;;
+	    '4') info "TimeZen status unknown!!" ;;
+	     * ) info "start-stop-daemon is screwed!" ;;
+	esac
+	;;
+    *)
+	# echo "Usage: $0 start|stop"
+	exit 1
+	;;
+esac
